@@ -31,7 +31,7 @@ def main():
     competition.register(GlobalAverageMovieRating())
     competition.register(Cheater())
     competition.register(AverageUserRating()) 
-    competition.register(BiasRatingSystem())   
+    competition.register(kNN())
     competition.build_round_robin()
     #run the competition - it prints out the results
     competition.compete()
