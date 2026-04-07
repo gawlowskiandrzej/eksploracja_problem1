@@ -9,6 +9,8 @@ class BiasRatingSystem(RatingSystem):
     """
     Klasa reprezentująca działanie Bias Rating System z buforowaniem
     i sekwencyjnym obliczaniem biasów
+
+    Ze względu na parametry faktoryzacji oraz wprowadzony trening, zadanie może rozwiązywać się ponad 20 min.
     """
 
     def __init__(self):

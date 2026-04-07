@@ -1,9 +1,10 @@
 # Metoda nr 1 - BIAS MODEL
 ## Opis podejścia - Bias-Based Collaborative Filtering
-Głównym założeniem tej metody jest system rekomendacji opierający się na odchyleniach. Zamiast zwykłego wyciągania średniej, próbujemy przewidzieć ocene z uwzględnieniem:
-- ogólnej średnii,
-- tak zwany charaktere użytkownika,
-- jakość filmu
+Głównym założeniem tej metody jest system rekomendacji opierający się na odchyleniach oraz ukrytych cechach użytkowników i filmów. Zamiast zwykłego wyciągania średniej, przewidujemy ocenę ucząc model algorytmem SGD przez kilka epok, minimalizując błąd predykcji z regularyzacją L2. Końcowa predykcja składa się z czterech elementów:
+- globalnej średniej ocen wszystkich filmów,
+- biasu użytkownika – czy recenzent jest surowy czy hojny w ocenach,
+- biasu filmu – czy film jest obiektywnie oceniany wyżej lub niżej od średniej,
+- iloczynu skalarnego wektorów ukrytych cech użytkownika i filmu – czyli wyuczonego dopasowania preferencji użytkownika do charakterystyki filmu.
 
 ## Funkcje z pliku system155198.py
 `calculate_global_mean` - odniesienie do całego systemu, czyli wyliczenie całości średniej globalnej.
@@ -11,6 +12,8 @@ Głównym założeniem tej metody jest system rekomendacji opierający się na o
 `calculate_movie_bias` - to samo, tylko dotyczy filmów
 `clamp_raiting` - tutaj znajduje sie zabezpieczenie, tzn. suma biasów nie może wyskoczyć poza naszą skalę.
 `rate` - zlicza względem naszej funkcji: średnia + bias usera + bias użytkownika. Główny punkt algorytmu.
+`_get_train_data` – zbiera wszystkie oceny użytkowników do listy krotek (user_id, movie_id, rating) i inicjalizuje losowe wektory cech oraz biasy dla każdego użytkownika i filmu.
+`_train` – trenuje model przez kilka epok algorytmem SGD, iteracyjnie poprawiając biasy i wektory cech użytkowników i filmów na podstawie błędu predykcji.
 
 ## Znalezione źródła
 [Artykuł PMC - 10 mar 2026]
